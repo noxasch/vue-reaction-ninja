@@ -1,6 +1,7 @@
 <script setup>
   import { ref } from 'vue';
   import Block from './components/Block.vue';
+  import Results from './components/Results.vue';
 
   const isPlaying = ref(false);
   const delay = ref(null);
@@ -22,8 +23,24 @@
   <h1>Reaction Ninja</h1>
   <button @click="start" :disabled="isPlaying">play</button>
   <Block v-if="isPlaying" :delay="delay" @game-over="gameOver" />
-  <p v-if="!isPlaying">Reaction Time: {{ score }} ms</p>
+  <Results v-if="!isPlaying" :score="score" />
 </template>
 
 <style scoped>
+  button {
+    background: #0faf87;
+    color: #fff;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 4px;
+    font-size: 16px;
+    letter-spacing: 1px;
+    cursor: pointer;
+    margin: 10px;
+  }
+
+  button[disabled] {
+    opacity: 0.2;
+    cursor: not-allowed;
+  }
 </style>
