@@ -2,18 +2,33 @@
   import { ref, onMounted } from 'vue';
 
   const showBlock = ref(false);
+  const startTime = ref(0);
+  const reactionTime = ref(0);
+
   const props = defineProps(['delay']);
+
+  function startTimer() {
+    startTime.value = Date.now();
+  }
+
+  function stopTimer() {
+    reactionTime.value = Date.now() - startTime.value;
+    // console.log(`${reactionTime.value / 1000} seconds`);
+  }
 
   onMounted(() => {
     setTimeout(() => {
       showBlock.value = true;
       console.log(props.delay);
+      startTimer();
     }, props.delay);
   });
 </script>
 
 <template>
-  <div class="block" v-if="showBlock"></div>
+  <div class="block" v-if="showBlock" @click="stopTimer">
+    Click Me!
+  </div>
 </template>
 
 <style scoped>
