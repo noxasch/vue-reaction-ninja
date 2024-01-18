@@ -6,6 +6,7 @@
   const reactionTime = ref(0);
 
   const props = defineProps(['delay']);
+  const emit = defineEmits(['game-over']);
 
   function startTimer() {
     startTime.value = Date.now();
@@ -13,13 +14,13 @@
 
   function stopTimer() {
     reactionTime.value = Date.now() - startTime.value;
+    emit('game-over', reactionTime.value);
     // console.log(`${reactionTime.value / 1000} seconds`);
   }
 
   onMounted(() => {
     setTimeout(() => {
       showBlock.value = true;
-      console.log(props.delay);
       startTimer();
     }, props.delay);
   });
